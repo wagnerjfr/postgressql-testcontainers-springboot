@@ -68,7 +68,7 @@ class CustomerServiceTest {
 		// Generate a random customer using test utilities
 		Customer testCustomer = testUtils.getRandomCustomer();
 
-		// Call the customerService to retrieve a customer based on the generated user's ID
+		// Call the customerService to retrieve a customer based on the generated customer's ID
 		Customer customer = customerService.getCustomer(testCustomer.getId());
 
 		// Assert that the retrieved customer's ID matches the generated customer's ID
