@@ -1,7 +1,7 @@
 package com.example.postgressqltestcontainersspringboot.util;
 
 import com.example.postgressqltestcontainersspringboot.Customer;
-import com.example.postgressqltestcontainersspringboot.DBConnectionProvider;
+import com.example.postgressqltestcontainersspringboot.DBConnection;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
@@ -14,10 +14,10 @@ import java.sql.Statement;
 @Slf4j
 public class TestUtils {
     private static final String TABLE = "Customer";
-    private final DBConnectionProvider dbConnectionProvider;
+    private final DBConnection dbConnection;
 
-    public TestUtils(DBConnectionProvider dbConnectionProvider){
-        this.dbConnectionProvider = dbConnectionProvider;
+    public TestUtils(DBConnection dbConnection){
+        this.dbConnection = dbConnection;
     }
 
     public void checkConnection() throws InterruptedException, SQLException {
@@ -25,7 +25,7 @@ public class TestUtils {
         int attempts = 10;
         while (attempts > 0) {
             try {
-                connection = this.dbConnectionProvider.getConnection();
+                connection = this.dbConnection.getConnection();
                 break;
             } catch (Exception e) {
                 log.warn("Trying to get the connection..");
@@ -43,7 +43,7 @@ public class TestUtils {
     public void setUpData() throws SQLException {
         String createUserSql = "create table if not exists " + TABLE + " (id int primary key, name varchar(20) null)";
         String insertUserSql = "insert into " + TABLE + " (id, name) values(1, 'Wagner')";
-        try (Connection connection = this.dbConnectionProvider.getConnection()) {
+        try (Connection connection = this.dbConnection.getConnection()) {
             Statement createStatement = connection.createStatement();
             Statement insertStatement = connection.createStatement();
             createStatement.execute(createUserSql);
@@ -53,7 +53,7 @@ public class TestUtils {
 
     public Customer getRandomCustomer() throws SQLException {
         String query = "SELECT id, name FROM " + TABLE + " ORDER by random() limit 1";
-        try (Connection connection = this.dbConnectionProvider.getConnection()) {
+        try (Connection connection = this.dbConnection.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(query);
             resultSet.next();
@@ -62,7 +62,7 @@ public class TestUtils {
     }
 
     public Customer getCustomerById(int id) throws SQLException {
-        try (Connection connection = this.dbConnectionProvider.getConnection()) {
+        try (Connection connection = this.dbConnection.getConnection()) {
             String query = "SELECT id, name FROM " + TABLE + " WHERE id = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);

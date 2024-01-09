@@ -10,14 +10,14 @@ public final class CustomerService {
     private static final String TABLE = "Customer";
     private final AtomicInteger atomicInteger = new AtomicInteger(1);
 
-    private final DBConnectionProvider dbConnectionProvider;
+    private final DBConnection dbConnection;
 
-    public CustomerService(DBConnectionProvider dbConnectionProvider) {
-        this.dbConnectionProvider = dbConnectionProvider;
+    public CustomerService(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     public Customer getCustomer(int id) throws SQLException {
-        try (Connection connection = this.dbConnectionProvider.getConnection()) {
+        try (Connection connection = this.dbConnection.getConnection()) {
             String query = "SELECT * FROM " + TABLE + " WHERE id = ?";
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setInt(1, id);
@@ -28,7 +28,7 @@ public final class CustomerService {
     }
 
     public Customer createCustomer(Customer customer) throws SQLException {
-        try (Connection connection = this.dbConnectionProvider.getConnection()) {
+        try (Connection connection = this.dbConnection.getConnection()) {
             String query = "INSERT INTO " + TABLE + " (id, name) VALUES (?, ?)";
             int id = atomicInteger.incrementAndGet();
             PreparedStatement ps = connection.prepareStatement(query);

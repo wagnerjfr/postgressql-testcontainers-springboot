@@ -3,7 +3,7 @@ package com.example.postgressqltestcontainersspringboot;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class DBConnectionProvider {
+public class DBConnectionProvider implements DBConnection {
 
     private final String url;
     private final String username;
@@ -15,6 +15,7 @@ public class DBConnectionProvider {
         this.password = password;
     }
 
+    @Override
     public Connection getConnection() {
         try {
             return DriverManager.getConnection(url, username, password);
