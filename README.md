@@ -11,5 +11,5 @@ and the primary emphasis will be on utilizing Testcontainers for testing interac
 ### [PostgresSQL Integration Test With Spring Boot and Testcontainers](https://medium.com/gitconnected/postgressql-integration-test-with-spring-boot-and-testcontainers-f69c6301e485)
 _Dockerized Testing for Seamless Database Integration in Java Applications_
 
-### [PostgresSQL Integration Test With HikariCP and Testcontainers](https://medium.com/gitconnected/postgressql-integration-test-with-spring-boot-and-testcontainers-f69c6301e485)
+### [PostgresSQL Integration Test With HikariCP and Testcontainers](https://medium.com/gitconnected/postgressql-integration-test-with-hikaricp-and-testcontainers-e8936b7b94e6)
 _Dockerized Testing for Seamless Database Integration in Java Spring Boot Applications_
